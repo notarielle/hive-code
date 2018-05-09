@@ -1,0 +1,42 @@
+select
+company_name,
+entry_page,
+exit_page,
+COUNT(session_id) as sessions,
+SUM(views) as views,
+SUM(events) as events,
+SUM(visit_length) as visit_length
+from gspmktg.infra_session_aggregate
+where company_name IN (
+'Bharti Enterprises Ltd',
+'Google Inc',
+'Google',
+'Reliance Industries Limited',
+'Comcast Corporation',
+'AT&T INC.',
+'Vodafone Group',
+'Saudi Telecom Company',
+'TIME WARNER CABLE ENTERPRISES LLC',
+'BT Group plc',
+'BSNL',
+'Virgin Enterprises Ltd',
+'SKY',
+'Telecom Italia S.p.A',
+'Idea Cellular Limited',
+'Atria Convergence Technologies Pvt. Ltd',
+'T-MOBILE USA, INC.',
+'HKICL Network',
+'ORANGE',
+'Amazon.com, Inc',
+'Verizon',
+'kt corp',
+'telefonica',
+'Spectrum Business Partner Program',
+'ILIAD',
+'TalkTalk Telecom Group PLC',
+'América Móvil',
+'Hathway Vijaynagar Cable Network Private Limited'
+)
+AND entry_page <> exit_page
+group by company_name,entry_page,exit_page
+;

@@ -1,0 +1,148 @@
+select
+CASE WHEN length(session_id)>0 THEN 'Infrastructure Campaign' ELSE 'Unknown' END AS campaign,
+company_name,
+entry_page,
+exit_page,
+CASE WHEN exit_page LIKE '%buy%' THEN 'How To Buy and CCW' 
+WHEN exit_page LIKE '%ccw%' THEN 'How To Buy and CCW'
+WHEN exit_page LIKE '%Commerce%' THEN 'How To Buy and CCW'
+WHEN exit_page LIKE '%products%' THEN 'Product Pages and Datasheets'
+WHEN exit_page LIKE '%/docs/%' THEN 'Product Pages and Datasheets'
+WHEN exit_page LIKE '%solutions%' THEN 'Solution Pages'
+WHEN exit_page LIKE '%locator.html%' THEN 'Sales and Partner Locators and Contact Cisco Form'
+WHEN exit_page LIKE '%locatr%' THEN 'Sales and Partner Locators and Contact Cisco Form'
+WHEN exit_page LIKE '%contacts%' THEN 'Sales and Partner Locators and Contact Cisco Form'
+WHEN exit_page LIKE '%idreg.cloudapps.cisco.com%' THEN 'New CDC Account Registration'
+WHEN exit_page LIKE '%CDClogin%' THEN 'CDC Account Login'
+WHEN exit_page LIKE '%logout%' THEN 'CDC Account Logout'
+WHEN exit_page LIKE '%software.cisco.com%' THEN 'Software Pages'
+WHEN exit_page LIKE '%training%' THEN 'Training'
+WHEN exit_page LIKE '%apps.cisco.com%' THEN 'Cisco Apps Page (Customer Interaction)'
+WHEN exit_page LIKE '%digital-transformation%' THEN 'Digital Transformation Pages'
+ELSE 'Other' END AS exit_page_cat,
+COUNT(session_id) as sessions,
+SUM(views) as views,
+SUM(events) as events,
+SUM(visit_length) as visit_length
+from gspmktg.infra_session_aggregate
+where entry_page <> exit_page
+group by 
+CASE WHEN length(session_id)>0 THEN 'Infrastructure Campaign' ELSE 'Unknown' END,
+company_name,entry_page,exit_page,
+CASE WHEN exit_page LIKE '%buy%' THEN 'How To Buy and CCW' 
+WHEN exit_page LIKE '%ccw%' THEN 'How To Buy and CCW'
+WHEN exit_page LIKE '%Commerce%' THEN 'How To Buy and CCW'
+WHEN exit_page LIKE '%products%' THEN 'Product Pages and Datasheets'
+WHEN exit_page LIKE '%/docs/%' THEN 'Product Pages and Datasheets'
+WHEN exit_page LIKE '%solutions%' THEN 'Solution Pages'
+WHEN exit_page LIKE '%locator.html%' THEN 'Sales and Partner Locators and Contact Cisco Form'
+WHEN exit_page LIKE '%locatr%' THEN 'Sales and Partner Locators and Contact Cisco Form'
+WHEN exit_page LIKE '%contacts%' THEN 'Sales and Partner Locators and Contact Cisco Form'
+WHEN exit_page LIKE '%idreg.cloudapps.cisco.com%' THEN 'New CDC Account Registration'
+WHEN exit_page LIKE '%CDClogin%' THEN 'CDC Account Login'
+WHEN exit_page LIKE '%logout%' THEN 'CDC Account Logout'
+WHEN exit_page LIKE '%software.cisco.com%' THEN 'Software Pages'
+WHEN exit_page LIKE '%training%' THEN 'Training'
+WHEN exit_page LIKE '%apps.cisco.com%' THEN 'Cisco Apps Page (Customer Interaction)'
+WHEN exit_page LIKE '%digital-transformation%' THEN 'Digital Transformation Pages'
+ELSE 'Other' END
+UNION ALL
+select
+CASE WHEN length(session_id)>0 THEN 'Automation Campaign' ELSE 'Unknown' END AS campaign,
+company_name,
+entry_page,
+exit_page,
+CASE WHEN exit_page LIKE '%buy%' THEN 'How To Buy and CCW' 
+WHEN exit_page LIKE '%ccw%' THEN 'How To Buy and CCW'
+WHEN exit_page LIKE '%Commerce%' THEN 'How To Buy and CCW'
+WHEN exit_page LIKE '%products%' THEN 'Product Pages and Datasheets'
+WHEN exit_page LIKE '%/docs/%' THEN 'Product Pages and Datasheets'
+WHEN exit_page LIKE '%solutions%' THEN 'Solution Pages'
+WHEN exit_page LIKE '%locator.html%' THEN 'Sales and Partner Locators and Contact Cisco Form'
+WHEN exit_page LIKE '%locatr%' THEN 'Sales and Partner Locators and Contact Cisco Form'
+WHEN exit_page LIKE '%contacts%' THEN 'Sales and Partner Locators and Contact Cisco Form'
+WHEN exit_page LIKE '%idreg.cloudapps.cisco.com%' THEN 'New CDC Account Registration'
+WHEN exit_page LIKE '%CDClogin%' THEN 'CDC Account Login'
+WHEN exit_page LIKE '%logout%' THEN 'CDC Account Logout'
+WHEN exit_page LIKE '%software.cisco.com%' THEN 'Software Pages'
+WHEN exit_page LIKE '%training%' THEN 'Training'
+WHEN exit_page LIKE '%apps.cisco.com%' THEN 'Cisco Apps Page (Customer Interaction)'
+WHEN exit_page LIKE '%digital-transformation%' THEN 'Digital Transformation Pages'
+ELSE 'Other' END AS exit_page_cat,
+COUNT(session_id) as sessions,
+SUM(views) as views,
+SUM(events) as events,
+SUM(visit_length) as visit_length
+from gspmktg.automation_session_aggregate
+where entry_page <> exit_page
+group by 
+CASE WHEN length(session_id)>0 THEN 'Automation Campaign' ELSE 'Unknown' END,
+company_name,entry_page,exit_page,
+CASE WHEN exit_page LIKE '%buy%' THEN 'How To Buy and CCW' 
+WHEN exit_page LIKE '%ccw%' THEN 'How To Buy and CCW'
+WHEN exit_page LIKE '%Commerce%' THEN 'How To Buy and CCW'
+WHEN exit_page LIKE '%products%' THEN 'Product Pages and Datasheets'
+WHEN exit_page LIKE '%/docs/%' THEN 'Product Pages and Datasheets'
+WHEN exit_page LIKE '%solutions%' THEN 'Solution Pages'
+WHEN exit_page LIKE '%locator.html%' THEN 'Sales and Partner Locators and Contact Cisco Form'
+WHEN exit_page LIKE '%locatr%' THEN 'Sales and Partner Locators and Contact Cisco Form'
+WHEN exit_page LIKE '%contacts%' THEN 'Sales and Partner Locators and Contact Cisco Form'
+WHEN exit_page LIKE '%idreg.cloudapps.cisco.com%' THEN 'New CDC Account Registration'
+WHEN exit_page LIKE '%CDClogin%' THEN 'CDC Account Login'
+WHEN exit_page LIKE '%logout%' THEN 'CDC Account Logout'
+WHEN exit_page LIKE '%software.cisco.com%' THEN 'Software Pages'
+WHEN exit_page LIKE '%training%' THEN 'Training'
+WHEN exit_page LIKE '%apps.cisco.com%' THEN 'Cisco Apps Page (Customer Interaction)'
+WHEN exit_page LIKE '%digital-transformation%' THEN 'Digital Transformation Pages'
+ELSE 'Other' END
+
+UNION ALL
+select
+CASE WHEN length(session_id)>0 THEN '5G Campaign' ELSE 'Unknown' END AS campaign,
+company_name,
+entry_page,
+exit_page,
+CASE WHEN exit_page LIKE '%buy%' THEN 'How To Buy and CCW' 
+WHEN exit_page LIKE '%ccw%' THEN 'How To Buy and CCW'
+WHEN exit_page LIKE '%Commerce%' THEN 'How To Buy and CCW'
+WHEN exit_page LIKE '%products%' THEN 'Product Pages and Datasheets'
+WHEN exit_page LIKE '%/docs/%' THEN 'Product Pages and Datasheets'
+WHEN exit_page LIKE '%solutions%' THEN 'Solution Pages'
+WHEN exit_page LIKE '%locator.html%' THEN 'Sales and Partner Locators and Contact Cisco Form'
+WHEN exit_page LIKE '%locatr%' THEN 'Sales and Partner Locators and Contact Cisco Form'
+WHEN exit_page LIKE '%contacts%' THEN 'Sales and Partner Locators and Contact Cisco Form'
+WHEN exit_page LIKE '%idreg.cloudapps.cisco.com%' THEN 'New CDC Account Registration'
+WHEN exit_page LIKE '%CDClogin%' THEN 'CDC Account Login'
+WHEN exit_page LIKE '%logout%' THEN 'CDC Account Logout'
+WHEN exit_page LIKE '%software.cisco.com%' THEN 'Software Pages'
+WHEN exit_page LIKE '%training%' THEN 'Training'
+WHEN exit_page LIKE '%apps.cisco.com%' THEN 'Cisco Apps Page (Customer Interaction)'
+WHEN exit_page LIKE '%digital-transformation%' THEN 'Digital Transformation Pages'
+ELSE 'Other' END AS exit_page_cat,
+COUNT(session_id) as sessions,
+SUM(views) as views,
+SUM(events) as events,
+SUM(visit_length) as visit_length
+from gspmktg.5g_session_aggregate
+where entry_page <> exit_page
+group by 
+CASE WHEN length(session_id)>0 THEN '5G Campaign' ELSE 'Unknown' END,
+company_name,entry_page,exit_page,
+CASE WHEN exit_page LIKE '%buy%' THEN 'How To Buy and CCW' 
+WHEN exit_page LIKE '%ccw%' THEN 'How To Buy and CCW'
+WHEN exit_page LIKE '%Commerce%' THEN 'How To Buy and CCW'
+WHEN exit_page LIKE '%products%' THEN 'Product Pages and Datasheets'
+WHEN exit_page LIKE '%/docs/%' THEN 'Product Pages and Datasheets'
+WHEN exit_page LIKE '%solutions%' THEN 'Solution Pages'
+WHEN exit_page LIKE '%locator.html%' THEN 'Sales and Partner Locators and Contact Cisco Form'
+WHEN exit_page LIKE '%locatr%' THEN 'Sales and Partner Locators and Contact Cisco Form'
+WHEN exit_page LIKE '%contacts%' THEN 'Sales and Partner Locators and Contact Cisco Form'
+WHEN exit_page LIKE '%idreg.cloudapps.cisco.com%' THEN 'New CDC Account Registration'
+WHEN exit_page LIKE '%CDClogin%' THEN 'CDC Account Login'
+WHEN exit_page LIKE '%logout%' THEN 'CDC Account Logout'
+WHEN exit_page LIKE '%software.cisco.com%' THEN 'Software Pages'
+WHEN exit_page LIKE '%training%' THEN 'Training'
+WHEN exit_page LIKE '%apps.cisco.com%' THEN 'Cisco Apps Page (Customer Interaction)'
+WHEN exit_page LIKE '%digital-transformation%' THEN 'Digital Transformation Pages'
+ELSE 'Other' END
+;

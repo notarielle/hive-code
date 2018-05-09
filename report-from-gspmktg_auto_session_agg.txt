@@ -1,0 +1,54 @@
+CREATE TABLE gspmktg_report_auto_session_agg AS
+SELECT 
+CASE WHEN LENGTH(referrer_cat)=0 THEN 'Error' ELSE 'Session Aggregate' END AS source,
+country_code_rip,
+YEAR(first_viewdate) as year,
+MONTH(first_viewdate) as month,
+company_name,
+company_type,
+CASE WHEN (referrer LIKE '%cisco%' and dtid_cat NOT LIKE '%Paid%' and referrer_cat NOT IN ('rfihub','Google Ads','Birchbox','dropdo','globeandmail','Complex','Doubleclick') 
+THEN 'Organic' ELSE 'Not Organic' END AS organic_or_not,
+referrer_cat as referrer_cat,
+referring_site,
+campaign,
+dtid_cat,
+CASE WHEN (dtid_cat LIKE '%Paid%' OR referrer_cat IN ('rfihub','Google Ads','Birchbox','dropdo','globeandmail','Complex','Doubleclick')) THEN 'Paid'
+WHEN dtid_cat LIKE '%Owned%' THEN 'Owned'
+ELSE 'Other' END AS paid_owned_other,
+position,
+oid_cat,
+entry_page,
+creative,
+COUNT(session_id) as sessions,
+SUM(views) as views,
+SUM(events) as events,
+SUM(visit_length) as visit_length,
+SUM(CASE WHEN visit_length <= 10 AND (views=0 OR events=0) THEN 1 ELSE 0 END) AS bounced_sessions,
+SUM(CASE WHEN visit_length <= 10 AND (views=0 OR events=0) THEN views ELSE 0 END) AS bounced_views,
+SUM(CASE WHEN visit_length <= 10 AND (views=0 OR events=0) THEN visit_length ELSE 0 END) AS bounced_visit_length,
+(COUNT(session_id) - SUM(CASE WHEN visit_length <= 10 AND (views=0 OR events=0) THEN 1 ELSE 0 END)) as sessions_net_of_bounce,
+(SUM(views) - SUM(CASE WHEN visit_length <= 10 AND (views=0 OR events=0) THEN views ELSE 0 END)) AS views_net_of_bounce,
+(SUM(visit_length) - SUM(CASE WHEN visit_length <= 10 AND (views=0 OR events=0) THEN visit_length ELSE 0 END)) AS visit_length_net_of_bounce
+FROM gspmktg.automation_session_aggregate
+--WHERE to_date(first_viewdate) > "2017-12-31" and to_date(first_viewdate) < "2018-04-11" 
+GROUP BY 
+CASE WHEN LENGTH(referrer_cat)=0 THEN 'Error' ELSE 'Session Aggregate' END,
+country_code_rip,
+YEAR(first_viewdate),
+MONTH(first_viewdate),
+company_name,
+company_type,
+CASE WHEN (referrer LIKE '%cisco%' and dtid_cat NOT LIKE '%Paid%' and referrer_cat NOT IN ('rfihub','Google Ads','Birchbox','dropdo','globeandmail','Complex','Doubleclick') 
+THEN 'Organic' ELSE 'Not Organic' END,
+referrer_cat,
+referring_site,
+campaign,
+dtid_cat,
+CASE WHEN (dtid_cat LIKE '%Paid%' OR referrer_cat IN ('rfihub','Google Ads','Birchbox','dropdo','globeandmail','Complex','Doubleclick')) THEN 'Paid'
+WHEN dtid_cat LIKE '%Owned%' THEN 'Owned' ELSE 'Other' END,
+position,
+oid_cat,
+entry_page,
+creative
+;
+
